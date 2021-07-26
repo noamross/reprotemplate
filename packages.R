@@ -6,5 +6,6 @@ library(conflicted)
 library(rmarkdown)
 library(tflow)
 library(fnmate)
+library(capsule)
 library(here)
 
