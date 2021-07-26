@@ -1,5 +1,5 @@
 # syntax = docker/dockerfile:1.3
-FROM rocker/geospatial:4.0.2
+FROM rocker/geospatial:4.1.0
 
 WORKDIR /project
 COPY . /project
