@@ -13,7 +13,7 @@ jobs:
           GIT_CRYPT_KEY64: ${{ secrets.GIT_CRYPT_KEY64 }}
         run: |
           TAG=$(echo $GITHUB_SHA | head -c7)
-          IMAGE=${{ env.GITHUB_REPOSITORY }}
+          IMAGE=$GITHUB_REPOSITORY
           echo ::set-output name=tagged_image::${IMAGE}:${TAG}
           echo ::set-output name=tag::${TAG}
           sudo apt-get install git-crypt
