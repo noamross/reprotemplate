@@ -7,4 +7,4 @@ COPY . /project
 RUN --mount=type=cache,target=/root/.cache/R/renv \
   Rscript -e 'R.version'
 RUN --mount=type=cache,target=/root/.cache/R/renv \
-  Rscript -e 'renv::isolate()'
+  Rscript -e 'renv::restore();renv::isolate()'
