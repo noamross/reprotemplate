@@ -50,6 +50,7 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           file: Dockerfile
           push: false # This would be set to true in a real world deployment scenario.
+          load: true
           tags: ${{ steps.prep.outputs.tagged_image }}
 
       - name: Run image
