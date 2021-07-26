@@ -57,7 +57,9 @@ jobs:
           image: ${{ steps.prep.outputs.tagged_image }}
           run: |
             Rscript -e 'targets::tar_make()'
-            Rscript -e 'targets::tar_read(target_buildtimes)'
-            ls -alt _targets
+            Rscript -e 'targets::tar_make(target_buildtimes);targets::tar_read(target_buildtimes)'
+
+      - name: Tree
+        run:  tree _targets
 
 
