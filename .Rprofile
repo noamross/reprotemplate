@@ -1,8 +1,3 @@
-source("renv/activate.R")
-if(interactive() && file.exists(Sys.getenv("R_PROFILE_USER", normalizePath("~/.Rprofile", mustWork = FALSE)))) {
-    source(Sys.getenv("R_PROFILE_USER", normalizePath("~/.Rprofile", mustWork = FALSE)))
-}
-
 readRenviron(".env")
 
 options(
@@ -10,6 +5,15 @@ options(
   renv.config.rspm.enabled = TRUE,
   renv.config.install.shortcuts = TRUE
 )
+
+if(interactive() && file.exists(Sys.getenv("R_PROFILE_USER", normalizePath("~/.Rprofile", mustWork = FALSE)))) {
+  source(Sys.getenv("R_PROFILE_USER", normalizePath("~/.Rprofile", mustWork = FALSE)))
+}
+
+source("renv/activate.R")
+
+
+
 
 if(requireNamespace("conflicted", quietly = TRUE)) {
   conflicted::conflict_prefer("filter", "dplyr", quiet = TRUE)
