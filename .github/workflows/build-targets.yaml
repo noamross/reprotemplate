@@ -1,9 +1,8 @@
-name: Fake deploy with normal Dockerfile
+name: Build Targets
 on: [push]
 
 jobs:
-  # This job uses Buildx layer caching
-  fake_deploy_cache_single:
+  build_targets:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
