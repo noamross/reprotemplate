@@ -9,11 +9,17 @@ jobs:
       - uses: actions/checkout@v2
       - name: Prepare
         id: prep
+        env:
+          GIT_CRYPT_KEY64: ${{ secrets.GIT_CRYPT_KEY64 }}
         run: |
           TAG=$(echo $GITHUB_SHA | head -c7)
           IMAGE="my_image_name"
           echo ::set-output name=tagged_image::${IMAGE}:${TAG}
           echo ::set-output name=tag::${TAG}
+
+          sudo apt-get install git-crypt
+          echo $GIT_CRYPT_KEY64 > git_crypt_key.key64 && base64 -d git_crypt_key.key64 > git_crypt_key.key && git-crypt unlock git_crypt_key.key
+          rm git_crypt_key.key git_crypt_key.key64
 
       - name: Set up Docker BuildX
         id: buildx
