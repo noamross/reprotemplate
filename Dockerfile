@@ -1,11 +1,15 @@
 # syntax = docker/dockerfile:1.3
+
+# Use a base image with all the system libraries you need
 FROM rocker/geospatial:4.1.0
 
+# Install system libraries
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
   ccache \
   git-crypt
 
+# Set up R to use ccache to cache compiled code
 RUN echo 'VER=\n' \
     'CCACHE=ccache\n' \
     'CC=$(CCACHE) gcc$(VER)\n' \
@@ -24,6 +28,7 @@ RUN echo 'VER=\n' \
 WORKDIR /project
 COPY . /project
 
+# Install renv, then install packages using both renv cache and ccache for speed
 RUN --mount=type=cache,target=/root/.cache/R/renv \
   Rscript -e 'R.version'
 RUN --mount=type=cache,target=/root/.cache/R/renv --mount=type=cache,target=/root/.ccache \

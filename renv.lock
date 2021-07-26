@@ -51,13 +51,6 @@
       "Repository": "CRAN",
       "Hash": "dab19adae4440ae55aa8a9d238b246bb"
     },
-    "RcppArmadillo": {
-      "Package": "RcppArmadillo",
-      "Version": "0.10.6.0.0",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "d34bcef6e2df81ab2d44c7fbe8b4d3f0"
-    },
     "askpass": {
       "Package": "askpass",
       "Version": "1.1",
@@ -170,13 +163,6 @@
       "Repository": "CRAN",
       "Hash": "43c5107cc96f47043a56736768ecc59d"
     },
-    "contentid": {
-      "Package": "contentid",
-      "Version": "0.0.10",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "7665666929e19e9d3a82be1017c22089"
-    },
     "cpp11": {
       "Package": "cpp11",
       "Version": "0.3.1",
@@ -190,13 +176,6 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "e75525c55c70e5f4f78c9960a4b402e9"
-    },
-    "credentials": {
-      "Package": "credentials",
-      "Version": "1.3.0",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "a96728288c75a814c900af9da84387be"
     },
     "curl": {
       "Package": "curl",
@@ -218,13 +197,6 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "1f37fa4ab2f5f7eded42f78b9a887182"
-    },
-    "desc": {
-      "Package": "desc",
-      "Version": "1.3.0",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "b6963166f7f10b970af1006c462ce6cd"
     },
     "digest": {
       "Package": "digest",
@@ -275,36 +247,12 @@
       "Repository": "CRAN",
       "Hash": "c98eb5133d9cb9e1622b8691487f11bb"
     },
-    "fasterize": {
-      "Package": "fasterize",
-      "Version": "1.0.3",
-      "Source": "GitHub",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteUsername": "ecohealthalliance",
-      "RemoteRepo": "fasterize",
-      "RemoteRef": "master",
-      "RemoteSha": "656464ef98cae96e610b7ac6bd1570b5a4e97731",
-      "Hash": "c0008edb18116633a006d90b0d0d01f0"
-    },
     "fastmap": {
       "Package": "fastmap",
       "Version": "1.1.0",
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "77bd60a6157420d4ffa93b27cf6a58b8"
-    },
-    "fnmate": {
-      "Package": "fnmate",
-      "Version": "0.0.5",
-      "Source": "GitHub",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteUsername": "MilesMcBain",
-      "RemoteRepo": "fnmate",
-      "RemoteRef": "master",
-      "RemoteSha": "8fc70bc1af795423dfc2dbd74b26e6bbef4a07e8",
-      "Hash": "184ed8ce5d3bd1a8356ac653c530b05d"
     },
     "forcats": {
       "Package": "forcats",
@@ -334,33 +282,12 @@
       "Repository": "CRAN",
       "Hash": "4d243a9c10b00589889fe32314ffd902"
     },
-    "gert": {
-      "Package": "gert",
-      "Version": "1.3.1",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "8612346a70ca2b2bebb0ef008d5c0e30"
-    },
     "ggplot2": {
       "Package": "ggplot2",
       "Version": "3.3.5",
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "d7566c471c7b17e095dd023b9ef155ad"
-    },
-    "gh": {
-      "Package": "gh",
-      "Version": "1.3.0",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "38c2580abbda249bd6afeec00d14f531"
-    },
-    "gitcreds": {
-      "Package": "gitcreds",
-      "Version": "0.1.1",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "f3aefccc1cc50de6338146b62f115de8"
     },
     "glue": {
       "Package": "glue",
@@ -445,13 +372,6 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "7b1f856410253d56ea67ad808f7cdff6"
-    },
-    "ini": {
-      "Package": "ini",
-      "Version": "0.3.1",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "6154ec2223172bce8162d4153cda21f7"
     },
     "isoband": {
       "Package": "isoband",
@@ -621,13 +541,6 @@
       "Repository": "CRAN",
       "Hash": "5e3c5dc0b071b21fa128676560dbe94d"
     },
-    "raster": {
-      "Package": "raster",
-      "Version": "3.4-13",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "4543b272b756a4ff0f80370c886ef90a"
-    },
     "readr": {
       "Package": "readr",
       "Version": "2.0.0",
@@ -724,20 +637,6 @@
       "Repository": "CRAN",
       "Hash": "3838071b66e0c566d55cc26bd6e27bf4"
     },
-    "sourcetools": {
-      "Package": "sourcetools",
-      "Version": "0.1.7",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "947e4e02a79effa5d512473e10f41797"
-    },
-    "sp": {
-      "Package": "sp",
-      "Version": "1.4-5",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "dfd843ee98246cf932823acf613b05dd"
-    },
     "stringi": {
       "Package": "stringi",
       "Version": "1.7.3",
@@ -772,19 +671,6 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "0249d89393821026c36e640b08c761ce"
-    },
-    "tflow": {
-      "Package": "tflow",
-      "Version": "0.1.1",
-      "Source": "GitHub",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteUsername": "MilesMcBain",
-      "RemoteRepo": "tflow",
-      "RemoteRef": "master",
-      "RemoteSha": "6531ad34aa576e044a1492af200124284645cf0a",
-      "Remotes": "milesmcbain/fnmate, milesmcbain/capsule",
-      "Hash": "9f4614d28134d2aaf578e0a9d6a8c095"
     },
     "tibble": {
       "Package": "tibble",
@@ -828,13 +714,6 @@
       "Repository": "CRAN",
       "Hash": "fb2b801053decce71295bb8cb04d438b"
     },
-    "usethis": {
-      "Package": "usethis",
-      "Version": "2.0.1",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "360e904f9e623286e1a0c6ca0a98c5f6"
-    },
     "utf8": {
       "Package": "utf8",
       "Version": "1.2.1",
@@ -870,13 +749,6 @@
       "Repository": "CRAN",
       "Hash": "aac6012f34348b3ca6bf373fe7172b06"
     },
-    "whisker": {
-      "Package": "whisker",
-      "Version": "0.4",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "ca970b96d894e90397ed20637a0c1bbe"
-    },
     "withr": {
       "Package": "withr",
       "Version": "2.4.2",
@@ -904,13 +776,6 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "2826c5d9efb0a88f657c7a679c7106db"
-    },
-    "zip": {
-      "Package": "zip",
-      "Version": "2.2.0",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "c7eef2996ac270a18c2715c997a727c5"
     }
   }
 }
