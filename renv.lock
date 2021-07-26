@@ -291,9 +291,14 @@
     "fasterize": {
       "Package": "fasterize",
       "Version": "1.0.3",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "58438060a8058aaffaf688becfe80c66"
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "ecohealthalliance",
+      "RemoteRepo": "fasterize",
+      "RemoteRef": "master",
+      "RemoteSha": "656464ef98cae96e610b7ac6bd1570b5a4e97731",
+      "Hash": "c0008edb18116633a006d90b0d0d01f0"
     },
     "fastmap": {
       "Package": "fastmap",
