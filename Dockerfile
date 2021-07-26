@@ -3,7 +3,8 @@ FROM rocker/geospatial:4.1.0
 
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
-  ccache
+  ccache \
+  git-crypt
 
 RUN echo 'VER=\n' \
     'CCACHE=ccache\n' \
