@@ -128,19 +128,6 @@
       "Repository": "CRAN",
       "Hash": "461aa75a11ce2400245190ef5d3995df"
     },
-    "capsule": {
-      "Package": "capsule",
-      "Version": "0.3.0.9000",
-      "Source": "GitHub",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteUsername": "milesmcbain",
-      "RemoteRepo": "capsule",
-      "RemoteRef": "master",
-      "RemoteSha": "7e451e3c68ab97a5f1917fd89a3f87023b980203",
-      "Remotes": "rstudio/renv, anthonynorth/using",
-      "Hash": "1471250f8e12a92283bf1c05c07aa2bf"
-    },
     "cellranger": {
       "Package": "cellranger",
       "Version": "1.1.0",
@@ -669,13 +656,6 @@
       "Repository": "CRAN",
       "Hash": "76c9e04c712a05848ae7a23d2f170a40"
     },
-    "remotes": {
-      "Package": "remotes",
-      "Version": "2.4.0",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "a85ebb35721573b196317b49ddd2dfe4"
-    },
     "renv": {
       "Package": "renv",
       "Version": "0.14.0",
@@ -854,18 +834,6 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "360e904f9e623286e1a0c6ca0a98c5f6"
-    },
-    "using": {
-      "Package": "using",
-      "Version": "0.4.0",
-      "Source": "GitHub",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteUsername": "anthonynorth",
-      "RemoteRepo": "using",
-      "RemoteRef": "master",
-      "RemoteSha": "c33a88c5c42c64fd84423a65af7b5a3ae8d5e64a",
-      "Hash": "330d8dd04d5368e7639a55ebdaeccbe4"
     },
     "utf8": {
       "Package": "utf8",
