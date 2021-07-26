@@ -1,6 +1,5 @@
 ### Reproducible / {targets} ignores
 _targets
-renv
 
 # Created by https://www.toptal.com/developers/gitignore/api/r,c++,macos,microsoftoffice
 # Edit at https://www.toptal.com/developers/gitignore?templates=r,c++,macos,microsoftoffice
