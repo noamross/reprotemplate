@@ -13,7 +13,7 @@ jobs:
           GIT_CRYPT_KEY64: ${{ secrets.GIT_CRYPT_KEY64 }}
         run: |
           TAG=$(echo $GITHUB_SHA | head -c7)
-          IMAGE="my_image_name"
+          IMAGE="noamross/my_image_name"
           echo ::set-output name=tagged_image::${IMAGE}:${TAG}
           echo ::set-output name=tag::${TAG}
 
@@ -51,4 +51,8 @@ jobs:
           file: Dockerfile
           push: false # This would be set to true in a real world deployment scenario.
           tags: ${{ steps.prep.outputs.tagged_image }}
+
+      - name: Run image
+        run: |
+          docker run ${{ steps.prep.outputs.tagged_image }} Rscript -e "cat('hello world')"
 
