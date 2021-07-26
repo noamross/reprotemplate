@@ -57,12 +57,9 @@ jobs:
         uses: addnab/docker-run-action@v3
         with:
           image: ${{ steps.prep.outputs.tagged_image }}
-          run: Rscript -e 'targets::tar_make()'
-
-      - name: Get Targets Build Time
-        uses: addnab/docker-run-action@v3
-        with:
-          image: ${{ steps.prep.outputs.tagged_image }}
-          run: Rscript -e 'targets::tar_read(target_buildtimes)'
+          run: |
+            Rscript -e 'targets::tar_make()'
+            Rscript -e 'targets::tar_read(target_buildtimes)'
+            ls -alt _targets
 
 
