@@ -27,10 +27,12 @@ jobs:
           install: true
           driver-opts: image=moby/buildkit:buildx-stable-1
 
-      - name: Enable BuildX Cache
+      - name: Enable Cache for Docker BuildX and targets
         uses: actions/cache@v2
         with:
-          path: /tmp/buildkit-cache/buildkit-state.tar
+          path: |
+            /tmp/buildkit-cache/buildkit-state.tar
+            _targets
           key: ${{ runner.os }}-buildkit-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-buildkit-
