@@ -52,10 +52,16 @@ jobs:
           load: true
           tags: ${{ steps.prep.outputs.tagged_image }}
 
-      - name: Run in Docker image
+      - name: Build Targets
         uses: addnab/docker-run-action@v3
         with:
           image: ${{ steps.prep.outputs.tagged_image }}
           run: Rscript -e 'targets::tar_make()'
+
+      - name: Get Targets Build Time
+        uses: addnab/docker-run-action@v3
+        with:
+          image: ${{ steps.prep.outputs.tagged_image }}
+          run: Rscript -e 'source("R/workflow_tools.R");target_buildtimes()'
 
 
