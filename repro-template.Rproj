@@ -15,5 +15,6 @@ LaTeX: XeLaTeX
 AutoAppendNewline: Yes
 StripTrailingWhitespace: Yes
 
-QuitChildProcessesOnExit: Yes
+BuildType: Makefile
 
+QuitChildProcessesOnExit: Yes
