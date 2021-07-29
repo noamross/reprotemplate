@@ -1,0 +1,2 @@
+.env filter=git-crypt diff=git-crypt
+auth/**/* filter=git-crypt diff=git-crypt
