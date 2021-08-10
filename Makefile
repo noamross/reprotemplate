@@ -57,12 +57,12 @@ key: ## Print a base64-encoded git-crypt symmetric key for use in CI systems
 	git-crypt export-key /tmp/key; base64 -i /tmp/key;rm /tmp/key
 
 nuke: ## Remove git-crypt and encrypted data from repository history
-	@read -p "This will remove git history of all files listed in .gitattributes. Continue? (y/n)" -n 1 -r \
-	&& set -e && echo \
+	@read -p "This will remove git history of all files listed in .gitattributes. All current changes must be committed. Continue? (y/n)" -n 1 -r \
+	&& set -e && export FILTER_BRANCH_SQUELCH_WARNING=1 && echo \
 	&& if [[ $$REPLY =~ ^[Yy]$$ ]]; \
 		then git-crypt status -e | while read s f; \
     do \
-    	git filter-branch --force --index-filter "git rm --cached --ignore-unmatch $f" --prune-empty --tag-name-filter cat -- --all; \
+    	git filter-branch --force --index-filter "git rm --cached --ignore-unmatch $$f" --prune-empty --tag-name-filter cat -- --all; \
     done; \
     git rm -r .git-crypt/; \
     rm -rf .git/git-crypt;\
