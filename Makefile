@@ -64,7 +64,7 @@ nuke: ## Remove git-crypt and encrypted data from repository history
     do \
     	git filter-branch --force --index-filter "git rm --cached --ignore-unmatch $$f" --prune-empty --tag-name-filter cat -- --all; \
     done; \
-    git rm -r .git-crypt/; \
+    git rm -rf .git-crypt/; \
     rm -rf .git/git-crypt;\
   fi
 
