@@ -1,7 +1,11 @@
-### Reproducible / {targets} ignores
+### Reproducible / {targets} ignores ###
 _targets
-
-docs/*.html
+_cache
+_targets.yaml
+outputs/*
+!outputs/.gitkeep
+README.html
+..env
 # Created by https://www.toptal.com/developers/gitignore/api/r,c++,macos,microsoftoffice
 # Edit at https://www.toptal.com/developers/gitignore?templates=r,c++,macos,microsoftoffice
 
@@ -69,6 +73,7 @@ vignettes/*.pdf
 *.exe
 *.out
 *.app
+
 ### macOS ###
 # General
 .DS_Store

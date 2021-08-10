@@ -4,6 +4,8 @@
 FROM rocker/geospatial:4.1.0
 
 # Install system libraries
+ENV NB_USER=rstudio # This is helpful to have if we move to a `binder` hosted environment
+
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
   ccache \
@@ -19,17 +21,35 @@ RUN echo 'VER=\n' \
     'FC=$(CCACHE) gfortran$(VER)\n' \
     'F77=$(CCACHE) gfortran$(VER)\n' \
     >> /usr/local/lib/R/etc/Makevars.site \
-    && mkdir -p /root/.ccache \
+    && mkdir -p /home/${NB_USER}/.ccache \
     && echo 'max_size = 5.0G\n' \
     'sloppiness = include_file_ctime\n' \
     'hash_dir = false\n' \
-    >> /root/.ccache/ccache.conf
+    >> /home/${NB_USER}/.ccache/ccache.conf
 
-WORKDIR /project
-COPY . /project
+# RStudio config - default startup directory, disable password login
+RUN mkdir -p /home/${NB_USER}/.config/rstudio \
+  && echo '{'\
+    '"save_workspace": "never",'\
+    '"always_save_history": false,'\
+    '"reuse_sessions_for_project_links": true,'\
+    '"initial_working_directory": "~/project",'\
+    '"posix_terminal_shell": "bash"'\
+    '}' >> \
+     /home/${NB_USER}/.config/rstudio/rstudio-prefs.json \
+  && echo "auth-none=1" >> /etc/rstudio/rserver.conf
 
-# Install renv, then install packages using both renv cache and ccache for speed
-RUN --mount=type=cache,target=/root/.cache/R/renv \
-  Rscript -e 'R.version'
+# The project
+WORKDIR /home/${NB_USER}/project
+COPY --chown=${NB_USER} renv.lock .Rprofile /home/${NB_USER}/project
+COPY --chown=${NB_USER} renv/activate.R /home/${NB_USER}/project/renv/activate.R
+# Install packages using on renv, caching
 RUN --mount=type=cache,target=/root/.cache/R/renv --mount=type=cache,target=/root/.ccache \
-  Rscript -e 'renv::restore();renv::isolate()'
+  Rscript -e 'R.version'
+
+RUN --mount=type=cache,target=/root/.cache/R/renv --mount=type=cache,target=/root/.ccache \
+  Rscript -e 'renv::restore()'
+
+COPY --chown=${NB_USER} . /home/${NB_USER}/project
+
+

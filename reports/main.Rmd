@@ -1,0 +1,40 @@
+---
+title: "Main Project Report"
+author: "Noam Ross"
+date: "8/6/2021"
+output: html_document
+params:
+  fail_on_error: false
+---
+
+```{r setup}
+suppressPackageStartupMessages(source('packages.R'))
+walk(dir_ls(here("R")),  ~try(source(.)))
+tar_load(c(dat, model1))
+```
+
+```{r}
+skim(dat)
+```
+
+```{r}
+print(model1)
+
+tryCatch({source("R/long_running_test_function.R"); ww <- NULL},
+         # warning = function(w) {
+         #   ww <<- paste(ww, "\nWarning: ", w$message)
+         # },
+         error = function(e) {
+           e$message <- paste0("Error in ", f, ": ", e$message)
+           message(e)
+         })
+```
+
+
+
+<details>
+ <summary>Reproducibility Notes</summary>
+```{r, echo = FALSE}
+print_repro_info()
+```
+</details>

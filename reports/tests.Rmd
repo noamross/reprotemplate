@@ -1,0 +1,40 @@
+---
+title: "Testing and Diagnostics Report"
+author: "Noam Ross"
+date: "8/6/2021"
+output: html_document
+params:
+  fail_on_error: false
+---
+
+```{r setup, include=FALSE}
+library(testthat)
+knitr::opts_chunk$set(echo = TRUE)
+set_reporter(MultiReporter$new(list(FailReporter$new(), StopReporter$new())))
+```
+
+```{r cars}
+x <- 2
+y <- 2
+v <- 3
+
+test_that("tests1", {
+  expect_equal(x, y)
+})
+```
+
+```{r}
+test_that("tests2", {
+  expect_equal(x, v)
+})
+```
+
+```{r}
+x <- get_reporter()
+class(x)
+x$reporters[[1]]$failed
+```
+
+
+
+
