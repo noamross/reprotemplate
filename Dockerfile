@@ -3,9 +3,11 @@
 # Use a base image with all the system libraries you need
 FROM rocker/geospatial:4.1.0
 
-# Install system libraries
-ENV NB_USER=rstudio # This is helpful to have if we move to a `binder` hosted environment
 
+# This is helpful to have if we move to a `binder` hosted environment
+ENV NB_USER=rstudio
+
+# Install system libraries
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
   ccache \
