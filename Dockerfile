@@ -3,7 +3,6 @@
 # Use a base image with all the system libraries you need
 FROM rocker/geospatial:4.1.0
 
-
 # This is helpful to have if we move to a `binder` hosted environment
 ENV NB_USER=rstudio
 
@@ -43,7 +42,7 @@ RUN mkdir -p /home/${NB_USER}/.config/rstudio \
 
 # The project
 WORKDIR /home/${NB_USER}/project
-COPY --chown=${NB_USER} renv.lock .Rprofile /home/${NB_USER}/project
+COPY --chown=${NB_USER} renv.lock .Rprofile .env /home/${NB_USER}/project
 COPY --chown=${NB_USER} renv/activate.R /home/${NB_USER}/project/renv/activate.R
 # Install packages using on renv, caching
 RUN --mount=type=cache,target=/root/.cache/R/renv --mount=type=cache,target=/root/.ccache \

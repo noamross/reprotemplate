@@ -26,40 +26,34 @@ jobs:
           install: true
           driver-opts: image=moby/buildkit:buildx-stable-1
 
-      - name: Enable Cache for Docker BuildX and targets
+      - name: Set up a cache for Docker, Targets, memoise
         uses: actions/cache@v2
         with:
-          path: /tmp/buildkit-cache/buildkit-state.tar
-          key: ${{ runner.os }}-buildkit-${{ github.sha }}
+          path: |
+            /tmp/buildkit-cache/buildkit-state.tar
+            _targets
+            _cache
+          key: ${{ runner.os }}-reprotemplate--${{ github.sha }}
           restore-keys: |
-            ${{ runner.os }}-buildkit-
+            ${{ runner.os }}-reprotemplate-
 
-      - name: Load BuildX Cache
+      - name: Load BuildX State from Cache
         uses: dashevo/gh-action-cache-buildkit-state@v1
         with:
           builder: buildx_buildkit_${{ steps.buildx.outputs.name }}0
           cache-path: /tmp/buildkit-cache
           cache-max-size: 5g
 
-      - name: Build Docker Image BuildX Cache
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          builder: ${{ steps.buildx.outputs.name }}
-          file: Dockerfile
-          push: false # This would be set to true in a real world deployment scenario.
-          load: true
-          tags: ${{ steps.prep.outputs.tagged_image }}
+      - name: Build Docker Image using BuildX Cache
+        run: |
+          make image
 
       - name: Build Targets
-        uses: addnab/docker-run-action@v3
-        with:
-          image: ${{ steps.prep.outputs.tagged_image }}
-          run: |
-            Rscript -e 'targets::tar_make()'
-            Rscript -e 'targets::tar_make(target_buildtimes);targets::tar_read(target_buildtimes)'
+        run: |
+          make targets dock=1
 
-      - name: Tree
-        run:  tree _targets
-
+      - name: On failure, launch a temporary interactive debugging session
+        uses: mxschmitt/action-tmate@v3
+        if: ${{ failure() }}
+        timeout-minutes: 15
 

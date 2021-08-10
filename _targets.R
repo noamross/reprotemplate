@@ -24,32 +24,32 @@ analyses <- tar_plan(
   model1 = memoise(long_running_test_function, cache = s3)(dat)
 )
 
-reports <- tar_plan(
-  tar_render(main_report, "reports/main.Rmd", output_dir = "outputs"),
-  tar_render(test_report, "reports/tests.Rmd", output_dir = "outputs"),
-  all_reports = c(main_report, test_report)
-)
+# reports <- tar_plan(
+#   tar_render(main_report, "reports/main.Rmd", output_dir = "outputs"),
+#   tar_render(test_report, "reports/tests.Rmd", output_dir = "outputs"),
+#   all_reports = c(main_report, test_report)
+# )
 
-deployments <- tar_plan(
-  rs_deployment = deployApp(appDir = dirname(main_report[1]),
-                               appFiles = c(main_report, tests[1]),
-                               appPrimaryDoc = main_report[1]),
-  s3_deployment = deploy_s3_git_dir(dirname(main_report[1])),
-  all_deployments = c(rs_deployment, s3_deployment)
-)
+# deployments <- tar_plan(
+#   rs_deployment = deployApp(appDir = dirname(main_report[1]),
+#                                appFiles = c(main_report, tests[1]),
+#                                appPrimaryDoc = main_report[1]),
+#   s3_deployment = deploy_s3_git_dir(dirname(main_report[1])),
+#   all_deployments = c(rs_deployment, s3_deployment)
+# )
 
-tests <- tar_plan(
-  all_tests = c(test_report)
-)
-
-diagnostics <- tar_plan(
-  target_summary = summarise_targets()
-)
+# tests <- tar_plan(
+#   all_tests = c(test_report)
+# )
+#
+# diagnostics <- tar_plan(
+#   target_summary = summarise_targets()
+# )
 
 list(
-  data_sources,
-  analyses,
-  reports,
-  deployments,
-  tests
+  data_sources
+#  analyses,
+#  reports,
+#  deployments,
+#  tests
 )
