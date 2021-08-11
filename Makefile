@@ -5,11 +5,12 @@ port=8787
 dock=
 quiet=
 tar=
+env_key=GIT_CRYPT_KEY64
 cmd=echo 'Run `make dock cmd="YOUR_COMMAND"` to run in the docker image'
 WORKDIR:=$(shell pwd)
 DOCKER_CMD_=docker run -v ${WORKDIR}:/home/rstudio/project ${IMAGE_NAME}
 ifdef dock
-  DOCKER_CMD={DOCKER_CMD_}
+  DOCKER_CMD=${DOCKER_CMD_}
   IMG=image
 else
 	DOCKER_CMD=
@@ -17,7 +18,7 @@ else
 endif
 
 ifdef quiet
-  QUIET=--quiet
+  QUIET=> /dev/null
 else
 	QUIET=
 endif
@@ -73,6 +74,17 @@ keys: ## Install default RStudio keybindings
 
 cryptkey: ## Print a base64-encoded git-crypt symmetric key for use in CI systems
 	git-crypt export-key /tmp/key; base64 -i /tmp/key;rm /tmp/key
+
+decrypt: ## Decrypt the repository, using an base64-encoded environment variable (`env_key=`) if available (default GIT_CRYPT_KEY64)`
+	${DOCKER_CMD} \
+		$$(if [[ -z $$${env_key} ]]; then \
+			echo $$${env_key} > /tmp/git_crypt_key.key64 \
+			&& base64 -d /tmp/git_crypt_key.key64 > /tmp/git_crypt_key.key \
+			&& git-crypt unlock git_crypt_key.key; \
+		else \
+			git-crypt unlock; \
+		fi; \
+    rm -f /tmp/git_crypt_key.key /tmp/git_crypt_key.key64 && echo "echo")
 
 nuke: ## Remove git-crypt and encrypted data from repository history
 	@read -p "This will remove git history of all files listed in .gitattributes. All current changes must be committed. Continue? (y/n)" -n 1 -r \

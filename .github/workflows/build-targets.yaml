@@ -5,7 +5,7 @@ jobs:
   build_targets:
     runs-on: ubuntu-latest
     steps:
-      - name: Prepare Image Names and Decrypt Environment Variables
+      - name: Check out repository
         uses: actions/checkout@v2
 
       - name: Set up Docker BuildX to Use Advanced Build Options
@@ -30,7 +30,7 @@ jobs:
       - name: Load BuildX State from Cache
         uses: dashevo/gh-action-cache-buildkit-state@v1
         with:
-          builder: buildx_buildkit_${{ steps.buildx.outputs.name }}0
+          builder: buildx_buildkit_${{ steps.buildx.outputs.name }}
           cache-path: /tmp/buildkit-cache
           cache-max-size: 5g
 
@@ -39,18 +39,16 @@ jobs:
           make image
 
       - name: Decrypt Repository
+        env:
+          GIT_CRYPT_KEY64: ${{ secrets.GIT_CRYPT_KEY64 }}
         run: |
-          echo $GIT_CRYPT_KEY64 > /tmp/git_crypt_key.key64
-          base64 -d /tmpgit_crypt_key.key64 > git_crypt_key.key
-          make dock cmd='git-crypt unlock git_crypt_key.key' quiet=1
-          rm git_crypt_key.key git_crypt_key.key64
-
+          make decrypt dock=1
 
       - name: Build Targets
         run: |
-          make targets dock=1
+          make targets dock=1 quiet=1
 
-      - name: Print Tarets Summary
+      - name: Print Targets Summary
         run: |
           make list dock=1 quiet=1
 
