@@ -8,6 +8,13 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
 
+      - name: Decrypt Repository
+        env:
+          GIT_CRYPT_KEY64: ${{ secrets.GIT_CRYPT_KEY64 }}
+        run: |
+          sudo apt-get install git-crypt
+          make decrypt
+
       - name: Set up Docker BuildX to Use Advanced Build Options
         id: buildx
         uses: docker/setup-buildx-action@v1
@@ -37,12 +44,6 @@ jobs:
       - name: Build Docker Image using BuildX Cache
         run: |
           make image
-
-      - name: Decrypt Repository
-        env:
-          GIT_CRYPT_KEY64: ${{ secrets.GIT_CRYPT_KEY64 }}
-        run: |
-          make decrypt dock=1
 
       - name: Build Targets
         run: |
