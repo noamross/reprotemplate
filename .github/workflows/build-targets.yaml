@@ -5,19 +5,8 @@ jobs:
   build_targets:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
       - name: Prepare Image Names and Decrypt Environment Variables
-        id: prep
-        env:
-          GIT_CRYPT_KEY64: ${{ secrets.GIT_CRYPT_KEY64 }}
-        run: |
-          TAG=$(echo $GITHUB_SHA | head -c7)
-          IMAGE=$GITHUB_REPOSITORY
-          echo ::set-output name=tagged_image::${IMAGE}:${TAG}
-          echo ::set-output name=tag::${TAG}
-          sudo apt-get install git-crypt
-          echo $GIT_CRYPT_KEY64 > git_crypt_key.key64 && base64 -d git_crypt_key.key64 > git_crypt_key.key && git-crypt unlock git_crypt_key.key
-          rm git_crypt_key.key git_crypt_key.key64
+        uses: actions/checkout@v2
 
       - name: Set up Docker BuildX to Use Advanced Build Options
         id: buildx
@@ -33,6 +22,7 @@ jobs:
             /tmp/buildkit-cache/buildkit-state.tar
             _targets
             _cache
+            outputs
           key: ${{ runner.os }}-reprotemplate--${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-reprotemplate-
@@ -48,9 +38,21 @@ jobs:
         run: |
           make image
 
+      - name: Decrypt Repository
+        run: |
+          echo $GIT_CRYPT_KEY64 > /tmp/git_crypt_key.key64
+          base64 -d /tmpgit_crypt_key.key64 > git_crypt_key.key
+          make dock cmd='git-crypt unlock git_crypt_key.key' quiet=1
+          rm git_crypt_key.key git_crypt_key.key64
+
+
       - name: Build Targets
         run: |
           make targets dock=1
+
+      - name: Print Tarets Summary
+        run: |
+          make list dock=1 quiet=1
 
       - name: On failure, launch a temporary interactive debugging session
         uses: mxschmitt/action-tmate@v3

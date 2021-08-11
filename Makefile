@@ -3,24 +3,35 @@ RSCRIPT=Rscript
 IMAGE_NAME=repro-image
 port=8787
 dock=
+quiet=
 tar=
+cmd=echo 'Run `make dock cmd="YOUR_COMMAND"` to run in the docker image'
 WORKDIR:=$(shell pwd)
+DOCKER_CMD_=docker run -v ${WORKDIR}:/home/rstudio/project ${IMAGE_NAME}
 ifdef dock
-  DOCKER_CMD=docker run -v ${WORKDIR}:/home/rstudio/project ${IMAGE_NAME}
+  DOCKER_CMD={DOCKER_CMD_}
   IMG=image
 else
 	DOCKER_CMD=
 	IMG=
 endif
 
+ifdef quiet
+  QUIET=--quiet
+else
+	QUIET=
+endif
+
+
 #Add a comment starting with `##` after any target to print it with `make help`
 
-.PHONY: help target list deploy test check packages clean image image-nc launch
+.PHONY: help target list deploy test check packages clean image image-nc launch dock
 
-target: ${IMG} packages ## Build targets.  Defaults to all. Specify targets `make tar=target_name`. Use docker with `make target dock=1`
+target: ${IMG} packages ## Build targets.  Defaults to all. Specify targets with `make tar=target_name`. Use docker with `make target dock=1`
 	${DOCKER_CMD} ${RSCRIPT} -e 'targets::tar_make_future(${tar})'
+	make list
 
-list: ## List the targets the workflow with status, size, build time, and dependencies. Consider `targets::tar_visnetwork()` in the R console for another view
+list: ${IMG} ## List the targets the workflow with status, size, build time, and dependencies. Consider `targets::tar_visnetwork()` in the R console for another view
 	@${DOCKER_CMD} ${RSCRIPT} -e 'source("R/utils.R");summarize_targets()'
 
 deploy: ${IMG} ## Build target `all_deployments`. Accepts `dock=1`.
@@ -40,7 +51,7 @@ clean: packages ## Delete cached targets
 	${RSCRIPT} -e 'targets::tar_destroy(destroy = "all", ask = FALSE)'
 
 image: ## Build docker image
-	docker build . -t ${IMAGE_NAME}
+	docker build . -t ${IMAGE_NAME} ${QUIET}
 
 image-nc: ## Build docker image, clearing the cache
 	docker build . -t ${IMAGE_NAME} --no-cache
@@ -53,7 +64,14 @@ launch: image ## Launch a docker environment with interactive RStudio in the bro
 stop: ## Stop the interactive docker image
 	docker stop ${IMAGE_NAME}
 
-key: ## Print a base64-encoded git-crypt symmetric key for use in CI systems
+dock: image ## Run a command in the docker image with `make dock cmd="YOUR_COMMAND"`
+	${DOCKER_CMD_} ${cmd}
+
+keys: ## Install default RStudio keybindings
+	@echo "Installing these defaults into ~/.config/rstudio/keybindings/"
+	${RSCRIPT} -e 'source("R/utils.R");set_default_keybindings()'
+
+cryptkey: ## Print a base64-encoded git-crypt symmetric key for use in CI systems
 	git-crypt export-key /tmp/key; base64 -i /tmp/key;rm /tmp/key
 
 nuke: ## Remove git-crypt and encrypted data from repository history
