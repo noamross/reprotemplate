@@ -5,7 +5,7 @@ if (file.exists(".env")) {
 }
 
 # Put the project library *outside* the project
-Sys.setenv(RENV_PATHS_LIBRARY_ROOT = file.path(normalizePath("~/.renv-project-libraries", mustWork = FALSE), basename(getwd())))
+Sys.setenv(RENV_PATHS_LIBRARY_ROOT = file.path(normalizePath("~/.renv-project-libraries", mustWork = FALSE)))
 
 if (file.exists("renv/activate.R")) {
   source("renv/activate.R")
