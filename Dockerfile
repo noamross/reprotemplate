@@ -1,7 +1,7 @@
 # syntax = docker/dockerfile:1.3
 
 # Use a base image with all the system libraries you need
-FROM rocker/r-ver:4.1.0 AS sysbase
+FROM rocker/r-ver:4.1.0
 # Install system libraries
 RUN rm -f /etc/apt/apt.conf.d/docker-clean; echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' > /etc/apt/apt.conf.d/keep-cache
 RUN --mount=type=cache,target=/var/cache/apt --mount=type=cache,target=/var/lib/apt \
@@ -22,10 +22,8 @@ RUN --mount=type=cache,target=/var/cache/apt --mount=type=cache,target=/var/lib/
     gdal-bin \
     libgmp10 \
     libglpk-dev \
+    libssl-dev \
    && rm -rf /var/lib/apt/lists/*
-
-
-FROM sysbase AS projectimage
 
 ENV NB_USER=root
 # The project
