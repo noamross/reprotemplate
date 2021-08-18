@@ -920,13 +920,6 @@
       "Repository": "CRAN",
       "Hash": "8cfe5c1d3a8c8304496ba3034e080405"
     },
-    "sessioninfo": {
-      "Package": "sessioninfo",
-      "Version": "1.1.1",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "308013098befe37484df72c39cf90d6e"
-    },
     "shiny": {
       "Package": "shiny",
       "Version": "1.6.0",
