@@ -33,7 +33,7 @@ WORKDIR /home/${NB_USER}/project
 COPY --chown=${NB_USER} renv.lock .Rprofile .env /home/${NB_USER}/project
 COPY --chown=${NB_USER} renv/activate.R /home/${NB_USER}/project/renv/activate.R
 # Install packages using on renv, caching
-RUN --mount=type=cache,target=/root/.cache/R/renv --mount=type=cache,target=/root/.ccache \
+RUN --mount=type=cache,target=/root/.cache/R/renv \
   Rscript -e 'renv::restore()'
 
 COPY --chown=${NB_USER} . /home/${NB_USER}/project
