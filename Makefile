@@ -77,10 +77,10 @@ cryptkey: ## Print a base64-encoded git-crypt symmetric key for use in CI system
 
 decrypt: ## Decrypt the repository, using an base64-encoded environment variable (`env_key=`) if available (default GIT_CRYPT_KEY64)`
 	${DOCKER_CMD} \
-		$$(if [[ -z $$${env_key} ]]; then \
+		$$(if [[ ! -z $$${env_key} ]]; then \
 			echo $$${env_key} > /tmp/git_crypt_key.key64 \
 			&& base64 -d /tmp/git_crypt_key.key64 > /tmp/git_crypt_key.key \
-			&& git-crypt unlock git_crypt_key.key; \
+			&& git-crypt unlock /tmp/git_crypt_key.key; \
 		else \
 			git-crypt unlock; \
 		fi; \
