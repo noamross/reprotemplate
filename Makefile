@@ -30,7 +30,6 @@ endif
 
 targets: ${IMG} packages ## Build targets.  Defaults to all. Specify targets with `make tar=target_name`. Use docker with `make target dock=1`
 	${DOCKER_CMD} ${RSCRIPT} -e 'targets::tar_make_future(${tar})'
-	make list
 
 list: ${IMG} ## List the targets the workflow with status, size, build time, and dependencies. Consider `targets::tar_visnetwork()` in the R console for another view
 	@${DOCKER_CMD} ${RSCRIPT} -e 'source("R/utils.R");summarize_targets()'
