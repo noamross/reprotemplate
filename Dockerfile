@@ -49,7 +49,9 @@ RUN --mount=type=cache,target=/root/.cache/R/renv --mount=type=cache,target=/roo
   Rscript -e 'R.version'
 
 RUN --mount=type=cache,target=/root/.cache/R/renv --mount=type=cache,target=/root/.ccache \
-  Rscript -e 'renv::restore()'
+  Rscript -e 'renv::restore()' \
+  && cp -r /root/.cache/R/renv /root/.cache/R/renv-tmp
+RUN rm -rf /root/.cache/R/renv && mv /root/.cache/R/renv-tmp /root/.cache/R/renv
 
 COPY --chown=${NB_USER} . /home/${NB_USER}/project
 
