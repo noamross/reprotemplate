@@ -29,7 +29,6 @@ jobs:
         with:
           path: |
             /tmp/buildkit-cache/buildkit-state.tar
-            /tmp/docker-cache
             _targets
             _cache
             outputs
