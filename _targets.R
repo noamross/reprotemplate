@@ -14,6 +14,7 @@ s3 <- s3_layered_cache()
 tar_config_set(workers = get_num_cores())
 
 # Targets ---------
+
 data_sources <- tar_plan(
   dat = tibble(a = runif(100))
 )
