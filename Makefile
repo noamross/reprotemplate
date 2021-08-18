@@ -51,12 +51,14 @@ clean: packages ## Delete cached targets
 	${RSCRIPT} -e 'targets::tar_destroy(destroy = "all", ask = FALSE)'
 
 image: ## Build docker image
-	docker buildx build . --load -t ${IMAGE_NAME} ${QUIET}
+	docker buildx build . --load -t ${IMAGE_NAME} ${QUIET} \
+	--cache-from type=local,src=/tmp/docker-cache
+	--cache-to   type=local,dest=/tmp/docker-cache,mode=max
 
 image-nc: ## Build docker image, clearing the cache
-	docker build . -t ${IMAGE_NAME} --no-cache
+	docker buildx build . --load -t ${IMAGE_NAME} --no-cache
 
-launch: image ## Launch a docker environment with interactive RStudio in the browser. Set `port=PORT_NUMBER` to specify the port (default:8787).
+launch: ## Launch a docker environment with interactive RStudio in the browser. Set `port=PORT_NUMBER` to specify the port (default:8787).
 	docker run --name ${IMAGE_NAME} --rm -d -v ${WORKDIR}:/home/rstudio/project -p ${port}:8787 -e USER=rstudio ${IMAGE_NAME} /init
 	${RSCRIPT} -e "browseURL(\"http://localhost:${port}\")"
 	@echo "Rstudio container \"${IMAGE_NAME}\" running at http://localhost:${port}.  Stop it by running \`make stop\`."
