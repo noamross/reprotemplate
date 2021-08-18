@@ -37,7 +37,7 @@ jobs:
       - name: Load BuildX State from Cache
         uses: dashevo/gh-action-cache-buildkit-state@v1
         with:
-          builder: buildx_buildkit_${{ steps.buildx.outputs.name }}
+          builder: buildx_buildkit_${{ steps.buildx.outputs.name }}0
           cache-path: /tmp/buildkit-cache
           cache-max-size: 5g
 
