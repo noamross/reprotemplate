@@ -3,8 +3,8 @@
 # Use a base image with all the system libraries you need
 FROM rocker/r-ver:4.1.0 AS sysbase
 # Install system libraries
-RUN rm -f /etc/apt/apt.conf.d/docker-clean
-RUN --mount=type=cache,target=/var/cache/apt \
+RUN rm -f /etc/apt/apt.conf.d/docker-clean; echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' > /etc/apt/apt.conf.d/keep-cache
+RUN --mount=type=cache,target=/var/cache/apt --mount=type=cache,target=/var/lib/apt \
      apt-get update \
   && apt-get install -y --no-install-recommends \
     libxml2-dev \
