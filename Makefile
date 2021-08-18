@@ -28,23 +28,23 @@ endif
 
 .PHONY: help target list deploy test check packages clean image image-nc launch dock
 
-targets: ${IMG} packages ## Build targets.  Defaults to all. Specify targets with `make tar=target_name`. Use docker with `make target dock=1`
+targets: packages ## Build targets.  Defaults to all. Specify targets with `make tar=target_name`. Use docker with `make target dock=1`
 	${DOCKER_CMD} ${RSCRIPT} -e 'targets::tar_make_future(${tar})'
 
-list: ${IMG} ## List the targets the workflow with status, size, build time, and dependencies. Consider `targets::tar_visnetwork()` in the R console for another view
+list: ## List the targets the workflow with status, size, build time, and dependencies. Consider `targets::tar_visnetwork()` in the R console for another view
 	@${DOCKER_CMD} ${RSCRIPT} -e 'source("R/utils.R");summarize_targets()'
 
-deploy: ${IMG} ## Build target `all_deployments`. Accepts `dock=1`.
+deploy: ## Build target `all_deployments`. Accepts `dock=1`.
 	${DOCKER_CMD} ${RSCRIPT} -e 'targets::tar_make(all_deployments)'
 
-test: ${IMG} ## Build target `all_tests`. Accepts `dock=1`.
+test:  ## Build target `all_tests`. Accepts `dock=1`.
 	${DOCKER_CMD} ${RSCRIPT} -e 'targets::tar_make(all_tests)'
 
-check: ${IMG} ## Check `renv` status and validate the `_targets.R` file. Takes `dock=1`.
+check: ## Check `renv` status and validate the `_targets.R` file. Takes `dock=1`.
 	${DOCKER_CMD} ${RSCRIPT} -e "renv::status()"
 	${DOCKER_CMD} ${RSCRIPT} -e "targets::tar_validate()"
 
-packages: ${IMG} ## Install packages needed for build
+packages: ## Install packages needed for build
 	${DOCKER_CMD} ${RSCRIPT} -e 'renv::restore()'
 
 clean: packages ## Delete cached targets
