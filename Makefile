@@ -52,7 +52,7 @@ clean: packages ## Delete cached targets
 
 image: ## Build docker image
 	docker buildx build . --load -t ${IMAGE_NAME} ${QUIET} \
-	--cache-from type=local,src=/tmp/docker-cache
+	--cache-from type=local,src=/tmp/docker-cache \
 	--cache-to   type=local,dest=/tmp/docker-cache,mode=max
 
 image-nc: ## Build docker image, clearing the cache
