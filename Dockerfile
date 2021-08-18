@@ -4,7 +4,7 @@
 FROM rocker/r-ver:4.1.0
 # Install system libraries
 RUN rm -f /etc/apt/apt.conf.d/docker-clean; echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' > /etc/apt/apt.conf.d/keep-cache
-RUN --mount=type=cache,target=/var/cache/apt --mount=type=cache,target=/var/lib/apt \
+RUN --mount=type=cache,target=/var/cache/apt --mount=type=cache,target=/var/lib/apt --mount=type=cache,target=/var/lib/apt/lists \
      apt-get update \
   && apt-get install -y --no-install-recommends \
     libxml2-dev \
@@ -22,8 +22,7 @@ RUN --mount=type=cache,target=/var/cache/apt --mount=type=cache,target=/var/lib/
     gdal-bin \
     libgmp10 \
     libglpk-dev \
-    libssl-dev \
-   && rm -rf /var/lib/apt/lists/*
+    libssl-dev
 
 ENV NB_USER=root
 # The project
