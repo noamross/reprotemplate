@@ -30,9 +30,9 @@ jobs:
             _targets
             _cache
             outputs
-          key: ${{ runner.os }}-reprotemplate--${{ github.sha }}
+          key: ${{ runner.os }}-reprotemplate-v2-${{ github.sha }}
           restore-keys: |
-            ${{ runner.os }}-reprotemplate-
+            ${{ runner.os }}-reprotemplate-v2-
 
       - name: Load BuildX State from Cache
         uses: dashevo/gh-action-cache-buildkit-state@v1
