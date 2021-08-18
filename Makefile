@@ -7,8 +7,9 @@ quiet=
 tar=
 env_key=GIT_CRYPT_KEY64
 cmd=echo 'Run `make dock cmd="YOUR_COMMAND"` to run in the docker image'
+DOCKER_USER=root
 WORKDIR:=$(shell pwd)
-DOCKER_CMD_=docker run -v ${WORKDIR}:/home/rstudio/project ${IMAGE_NAME}
+DOCKER_CMD_=docker run -v ${WORKDIR}:/home/${DOCKER_USER}/project ${IMAGE_NAME}
 ifdef dock
   DOCKER_CMD=${DOCKER_CMD_}
   IMG=image
@@ -56,10 +57,10 @@ image: ## Build docker image
 image-nc: ## Build docker image, clearing the cache
 	docker buildx build . --load -t ${IMAGE_NAME} --no-cache
 
-launch: ## Launch a docker environment with interactive RStudio in the browser. Set `port=PORT_NUMBER` to specify the port (default:8787).
-	docker run --name ${IMAGE_NAME} --rm -d -v ${WORKDIR}:/home/rstudio/project -p ${port}:8787 -e USER=rstudio ${IMAGE_NAME} /init
-	${RSCRIPT} -e "browseURL(\"http://localhost:${port}\")"
-	@echo "Rstudio container \"${IMAGE_NAME}\" running at http://localhost:${port}.  Stop it by running \`make stop\`."
+# launch: ## Launch a docker environment with interactive RStudio in the browser. Set `port=PORT_NUMBER` to specify the port (default:8787).
+# 	docker run --name ${IMAGE_NAME} --rm -d -v ${WORKDIR}:/home/${DOCKER_USER}/project -p ${port}:8787 -e USER=rstudio ${IMAGE_NAME} /init
+# 	${RSCRIPT} -e "browseURL(\"http://localhost:${port}\")"
+# 	@echo "Rstudio container \"${IMAGE_NAME}\" running at http://localhost:${port}.  Stop it by running \`make stop\`."
 
 stop: ## Stop the interactive docker image
 	docker stop ${IMAGE_NAME}
