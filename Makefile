@@ -52,7 +52,9 @@ clean: packages ## Delete cached targets
 	${RSCRIPT} -e 'targets::tar_destroy(destroy = "all", ask = FALSE)'
 
 image: ## Build docker image
-	docker buildx build . --load -t ${IMAGE_NAME} ${QUIET}
+	docker buildx build . --load -t ${IMAGE_NAME} ${QUIET} \
+	--cache-from type=local,src=/tmp/docker-cache \
+  --cache-to   type=local,dest=/tmp/docker-cache,mode=max
 
 image-nc: ## Build docker image, clearing the cache
 	docker buildx build . --load -t ${IMAGE_NAME} --no-cache
