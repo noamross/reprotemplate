@@ -32,7 +32,7 @@ COPY --chown=${NB_USER} renv/activate.R /home/${NB_USER}/project/renv/activate.R
 RUN --mount=type=cache,target=/root/.cache/R/renv \
   Rscript -e 'renv::restore()'
 
-COPY --chown=${NB_USER} . /home/${NB_USER}/project
+# COPY --chown=${NB_USER} . /home/${NB_USER}/project
 
 
 
