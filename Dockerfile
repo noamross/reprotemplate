@@ -16,7 +16,6 @@ RUN --mount=type=cache,target=/var/cache/apt --mount=type=cache,target=/var/lib/
     libssh2-1-dev \
     libxtst6 \
     libcurl4-openssl-dev \
-    unixodbc-dev \
     libgeos-dev \
     libgeos++-dev \
     gdal-bin \
