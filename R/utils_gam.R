@@ -1,3 +1,5 @@
+# TODO more ensmallen functions, set up as S3?
+# TODO make residuals.gam_small and maybe add partial resids function to plot fn
 #' Produced reduced-size GAM models
 #'
 #' These functions shrink GAM models to more modest size by removing training data
@@ -17,25 +19,30 @@
 #' @export
 #' @rdname ensmallen_gam
 #' @examples
-library(mgcv)
-set.seed(3)
-dat <- gamSim(1,n=25000,dist="normal",scale=20)
-bs <- "cr";k <- 12
-gam_obj <- bam(y ~ s(x0,bs=bs)+s(x1,bs=bs)+s(x2,bs=bs,k=k)+s(x3,bs=bs),data=dat)
-object.size(gam_obj)
-gam_obj_small <- ensmallen_gam(gam_obj, capture = TRUE)
-object.size(gam_obj)
-predictions <- predict(gam_obj_small, newdata = dat)
-summary(gam_obj_small)
-gam.check(gam_obj_small)
+#' library(mgcv)
+#' set.seed(3)
+#' dat <- gamSim(1,n=25000,dist="normal",scale=20)
+#' bs <- "cr";k <- 12
+#'
+#' gam_obj <- bam(y ~ s(x0,bs=bs)+s(x1,bs=bs)+s(x2,bs=bs,k=k)+s(x3,bs=bs),data=dat)
+#' object.size(gam_obj)
+#' gam_obj_small <- ensmallen_gam(gam_obj, capture = TRUE)
+#'
+#' object.size(gam_obj_small)
+#' class(gam_obj_small)
+#'
+#' predictions <- predict(gam_obj_small, newdata = dat)
+#' summary(gam_obj_small)
+#' gam.check(gam_obj_small)
 plot_gam_small(gam_obj_small, data = dat, pages = 1)
-class(gam_obj_small)
 ensmallen_gam <- function(gam_obj, capture = TRUE, height = 1024, width = 768, ...) {
-  old_size <- object.size(gam_obj)
   if (capture) {
     gam_obj <- capture_gam_summary(gam_obj)
     gam_obj <- capture_gam_check(gam_obj, ...)
   }
+
+  # Found big parts of the model with
+  # imap_dfr(gam_obj, ~tibble(piece = .y, size = lobstr::obj_size(.x)))
   gam_obj$model <- NULL
   gam_obj$y <- NULL
   gam_obj$G <- NULL
@@ -46,24 +53,21 @@ ensmallen_gam <- function(gam_obj, capture = TRUE, height = 1024, width = 768, .
   gam_obj$prior.weights <- NULL
   gam_obj$weights <- NULL
 
-
+  # Found these running `rapply(gam_obj, function(x) attr(x, ".Environment"))`
   attr(gam_obj$terms, ".Environment") <- baseenv()
   attr(gam_obj$formula, ".Environment") <- baseenv()
   attr(gam_obj$pred.formula, ".Environment") <- baseenv()
   attr(gam_obj$pred.formula, ".Environment") <- baseenv()
 
-  new_size <- object.size(gam_obj)
-
-    message(paste0("Object size reduced ", round(100*(1 - (new_size/old_size))), "% to, ", format(new_size, units = 'MB', digits = 2)))
-
   class(gam_obj) <- c("gam_small", class(gam_obj))
   return(gam_obj)
 }
 
+# TODO make graphics capture better
 #' @importFrom evaluate evaluate new_output_handler
 #' @importFrom ragg agg_capture
-#' @importFrom gridGraphics  echoGrob
-#' @importFrom gridExtra  grid.arrange
+#' @importFrom gridGraphics echoGrob
+#' @importFrom gridExtra grid.arrange
 #' @importFrom png writePNG
 #' @export
 #' @rdname ensmallen_gam
